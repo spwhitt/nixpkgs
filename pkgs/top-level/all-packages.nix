@@ -1533,6 +1533,8 @@ let
 
   jscoverage = callPackage ../development/tools/misc/jscoverage { };
 
+  jugglinglab = callPackage ../applications/misc/jugglinglab { };
+
   jwhois = callPackage ../tools/networking/jwhois { };
 
   k2pdfopt = callPackage ../applications/misc/k2pdfopt { };
