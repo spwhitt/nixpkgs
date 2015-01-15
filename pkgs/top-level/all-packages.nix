@@ -1529,6 +1529,8 @@ let
 
   inadyn = callPackage ../tools/networking/inadyn { };
 
+  include-what-you-use = callPackage ../development/tools/analysis/include-what-you-use { };
+
   inetutils = callPackage ../tools/networking/inetutils { };
 
   ioping = callPackage ../tools/system/ioping {};
