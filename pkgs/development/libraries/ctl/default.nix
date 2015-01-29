@@ -1,29 +1,27 @@
-{ stdenv, fetchurl, ilmbase }:
+{ stdenv, cmake, fetchFromGitHub, ilmbase, openexr }:
 
-stdenv.mkDerivation {
-  name = "ctl-1.4.1";
+stdenv.mkDerivation rec {
+  name = "ctl-${version}";
+  version = "1.5.2";
 
-  src = fetchurl {
-    url = mirror://sourceforge/ampasctl/ctl-1.4.1.tar.gz;
-    sha256 = "16lzgbpxdyhykdwndj1i9vx3h4bfkxqqcrvasvgg70gb5raxj0mj";
+  src = fetchFromGitHub {
+    owner = "ampas";
+    repo = "CTL";
+    rev = "ctl-${version}";
+    sha256 = "0a698rd1cmixh3mk4r1xa6rjli8b8b7dbx89pb43xkgqxy67glwx";
   };
 
-  patches = [ ./patch.patch ./gcc47.patch ];
+  buildInputs = [ cmake ];
 
-  propagatedBuildInputs = [ ilmbase ];
+  propagatedBuildInputs = [ ilmbase openexr ];
 
-  configureFlags = "--with-ilmbase-prefix=${ilmbase}";
-
-  #configurePhase = "
-    #export CXXFLAGS=\"-I${ilmbase}/include -L${ilmbase}/lib\"
-    #echo $CXXFLAGS
-    #unset configurePhase; configurePhase
-  #";
-
-  meta = {
+  meta = with stdenv.lib; {
     description = "Color Transformation Language";
-    homepage = http://ampasctl.sourceforge.net;
-    license = "SOME OPEN SOURCE LICENSE"; # TODO which exactly is this?
+    longdescription = ''
+    '';
+    homepage = https://github.com/ampas/CTL;
+    license = licenses.free;
+    platforms = platforms.unix;
+    maintainers = [ maintainers.swhitt ];
   };
-
 }

@@ -6790,9 +6790,6 @@ let
     libpng = libpng12;
   };
 
-  # this ctl version is needed by openexr_viewers
-  openexr_ctl = callPackage ../development/libraries/openexr_ctl { };
-
   openexr = dropCxx (callPackage ../development/libraries/openexr { });
 
   openldap = callPackage ../development/libraries/openldap {
@@ -9938,7 +9935,7 @@ let
   keepass = callPackage ../applications/misc/keepass { };
 
   exrdisplay = callPackage ../applications/graphics/exrdisplay {
-    fltk = fltk20;
+    fltk = fltk13;
   };
 
   fbpanel = callPackage ../applications/window-managers/fbpanel { };

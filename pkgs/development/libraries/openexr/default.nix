@@ -1,18 +1,25 @@
-{ stdenv, fetchurl, pkgconfig, zlib, ctl, ilmbase }:
+{ stdenv, fetchurl, pkgconfig, zlib, ilmbase }:
 
 stdenv.mkDerivation rec {
-  name = "openexr-1.7.1";
+  name = "openexr-${version}";
+  version = "2.2.0";
   
   src = fetchurl {
-    url = "mirror://savannah/openexr/${name}.tar.gz";
-    sha256 = "0l2rdbx9lg4qk2ms98hwbsnzpggdrx3pbjl6pcvrrpjqp5m905n6";
+    url = "mirror://savannah/openexr/openexr-${version}.tar.gz";
+    sha256 = "0ca2j526n4wlamrxb85y2jrgcv0gf21b3a19rr0gh4rjqkv1581n";
   };
   
-  buildInputs = [ pkgconfig ctl ];
+  buildInputs = [ pkgconfig ];
   
   propagatedBuildInputs = [ zlib ilmbase ];
   
   configureFlags = "--enable-imfexamples";
   
-  patches = [ ./stringh.patch ];
+  meta = with stdenv.lib; {
+    description = "High dynamic-range image file format developed by Industrial Light & Magic for use in computer imaging applications.";
+    homepage = http://www.openexr.com;
+    license = licenses.bsd3;
+    platforms = platforms.unix;
+    maintainers = [ maintainers.swhitt ];
+  };
 }
