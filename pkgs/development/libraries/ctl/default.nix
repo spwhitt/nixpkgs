@@ -22,6 +22,6 @@ stdenv.mkDerivation rec {
     homepage = https://github.com/ampas/CTL;
     license = licenses.free;
     platforms = platforms.unix;
-    maintainers = [ maintainers.swhitt ];
+    maintainers = [ maintainers.spwhitt ];
   };
 }

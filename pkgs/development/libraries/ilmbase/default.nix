@@ -14,6 +14,6 @@ stdenv.mkDerivation rec {
     homepage = http://www.openexr.com;
     license = licenses.bsd3;
     platforms = platforms.unix;
-    maintainers = [ maintainers.swhitt ];
+    maintainers = [ maintainers.spwhitt ];
   };
 }
