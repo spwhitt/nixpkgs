@@ -1,4 +1,4 @@
-{ composableDerivation, fetchurl, pkgconfig, x11, inputproto, libXi
+{ stdenv, composableDerivation, fetchurl, pkgconfig, x11, inputproto, libXi
 , freeglut, mesa, libjpeg, zlib, libXinerama, libXft, libpng
 
 , automake, autoconf, libtool
@@ -55,10 +55,10 @@ composableDerivation.composableDerivation {} {
     homepage = http://www.fltk.org;
   };
 
-  patches = [
+  patches = if (stdenv.system != "x86_64-darwin") then [
     # https://bugs.archlinux.org/task/36186
     (fetchurl {
     url = "https://bugs.archlinux.org/task/36186?getfile=10750";
     sha256 = "1hpb1i87nc3zw6mgpgf3bfv557ci930bsn6rwlhaif51nlqd2wbj";
-  }) ];
+  }) ] else [];
 }
