@@ -15,7 +15,15 @@ stdenv.mkDerivation rec {
   patches = [(fetchpatch {
     url = "https://github.com/Itseez/opencv/commit/ea50be0529c24.diff";
     sha256 = "0nm02v7rmfcndj3jzmv3mrqh3hk5n6axx6gdxndyhabn201hqswn";
-  })];
+  })
+
+  # Fix for bug which clang detects as tautological compare and raises error
+  # Has been merged into opencv, so remove this patch on update
+  (fetchpatch {
+    url = "https://github.com/Itseez/opencv/pull/3488.diff";
+    sha256 = "0gvd0agmcrm4yfyf9slwkig6k2ig0rmrsw9kx0civhpnh8yg7k77";
+  })
+  ];
 
   buildInputs =
     [ unzip libjpeg libpng libtiff ]
@@ -27,6 +35,18 @@ stdenv.mkDerivation rec {
 
   cmakeFlags = [
     "-DCMAKE_BUILD_TYPE=Release"
+
+    # Don't build OpenCV's bundled dependencies
+    "-DBUILD_JASPER=OFF"
+    "-DBUILD_JPEG=OFF"
+    "-DBUILD_OPENEXR=OFF"
+    "-DBUILD_PNG=OFF"
+    "-DBUILD_TBB=OFF"
+    "-DBUILD_TIFF=OFF"
+    "-DBUILD_ZLIB=OFF"
+  ] ++ lib.optional (!enableBloat) [
+    "-DWITH_FFMPEG=OFF"
+    "-DBUILD_opencv_python=OFF"
   ];
 
   meta = {
@@ -34,6 +54,6 @@ stdenv.mkDerivation rec {
     homepage = http://opencv.org/;
     license = stdenv.lib.licenses.bsd3;
     maintainers = with stdenv.lib.maintainers; [viric flosse];
-    platforms = with stdenv.lib.platforms; linux;
+    platforms = with stdenv.lib.platforms; unix;
   };
 }
