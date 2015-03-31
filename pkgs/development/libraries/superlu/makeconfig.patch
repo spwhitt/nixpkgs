@@ -1,0 +1,37 @@
+diff -rupN SuperLU_4.3_orig/make.inc SuperLU_4.3/make.inc
+--- SuperLU_4.3_orig/make.inc	2015-01-21 16:14:17.000000000 -0500
++++ SuperLU_4.3/make.inc	2015-01-21 16:14:30.000000000 -0500
+@@ -16,19 +16,19 @@
+ #
+ #  The machine (platform) identifier to append to the library names
+ #
+-PLAT = _linux
++PLAT =
+ 
+ #
+ #  The name of the libraries to be created/linked to
+ #
+-SuperLUroot	= $(HOME)/Codes/SuperLU/SuperLU_4.3
++SuperLUroot	= PLACEHOLDER
+ SUPERLULIB   	= $(SuperLUroot)/lib/libsuperlu_4.3.a
+ TMGLIB       	= libtmglib.a
+ 
+-## BLASLIB   	= $(SuperLUroot)/lib/libblas.a
++BLASLIB   	= $(SuperLUroot)/lib/libblas.a
+ 
+-BLASDEF 	= -DUSE_VENDOR_BLAS
+-BLASLIB 	= -L$(HOME)/lib/GotoBLAS -lgoto
++#BLASDEF 	= -DUSE_VENDOR_BLAS
++#BLASLIB 	= -L$(HOME)/lib/GotoBLAS -lgoto
+ 
+ ## ATLAS BLAS causes single-precision to fail
+ #BLASLIB   	= -L/usr/lib/atlas -lblas
+@@ -45,7 +45,7 @@ ARCH         = ar
+ ARCHFLAGS    = cr
+ RANLIB       = ranlib
+ 
+-CC           = gcc
++CC           = cc
+ CFLAGS       = -DPRNTlevel=0 -O3
+ NOOPTS       = 
+ FORTRAN	     = g77

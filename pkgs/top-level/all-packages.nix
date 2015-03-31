@@ -7693,6 +7693,12 @@ let
 
   suil = callPackage ../development/libraries/audio/suil { };
 
+  superlu = callPackage ../development/libraries/superlu { };
+
+  superlu_mt = callPackage ../development/libraries/superlu_mt { };
+
+  superlu_dist = callPackage ../development/libraries/superlu_dist { };
+
   sutils = callPackage ../tools/misc/sutils { };
 
   svrcore = callPackage ../development/libraries/svrcore { };
