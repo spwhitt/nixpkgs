@@ -1,7 +1,6 @@
 {stdenv, fetchurl}:
 
 # Notes:
-# The 'PLACEHOLDER' thing is an ugly hack
 # This only builds a static library
 # This does not build matlab or doc
 # This does not build blaslib (make blaslib)
@@ -16,10 +15,19 @@ stdenv.mkDerivation rec {
     sha256 = "10b785s9s4x0m9q7ihap09275pq4km3k2hk76jiwdfdr5qr2168n";
   };
 
-  patches = [ ./makeconfig.patch ];
-
-  postPatch = ''
-    substituteInPlace make.inc --replace 'PLACEHOLDER' `pwd`
+  preBuild = ''
+    makeFlagsArray=(
+      # Build directory
+      SuperLUroot=`pwd`
+      # Don't append any suffix to library names
+      PLAT=
+      # BLAS library to use: use superlu's for now
+      BLASLIB=`pwd`/lib/libblas.a
+      # Something like -DUSE_VENDOR_PLAS
+      BLASDEF=
+      # Compiler to use
+      CC=clang
+    )
   '';
 
   installPhase = ''
