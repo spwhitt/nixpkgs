@@ -7695,9 +7695,9 @@ let
 
   superlu = callPackage ../development/libraries/superlu { };
 
-  superlu_mt = callPackage ../development/libraries/superlu_mt { };
+  superlu_mt = callPackage ../development/libraries/superlu/mt.nix { };
 
-  superlu_dist = callPackage ../development/libraries/superlu_dist { };
+  superlu_dist = callPackage ../development/libraries/superlu/dist.nix { };
 
   sutils = callPackage ../tools/misc/sutils { };
 
