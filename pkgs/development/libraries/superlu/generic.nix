@@ -24,7 +24,7 @@ stdenv.mkDerivation {
       # Use builtin blas. Something like -DUSE_VENDOR_PLAS
       BLASDEF=
       # Compiler to use
-      CC=clang
+      CC=$CC
 
       # Targets
       all blaslib
