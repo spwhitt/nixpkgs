@@ -16,6 +16,8 @@ stdenv.mkDerivation rec {
   buildInputs = [ libgcrypt gobjectIntrospection ];
   # optional: build docs with gtk-doc? (probably needs a flag as well)
 
+  NIX_LDFLAGS = "-lintl";
+
   meta = {
     description = "A library for storing and retrieving passwords and other secrets";
     homepage = https://wiki.gnome.org/Projects/Libsecret;

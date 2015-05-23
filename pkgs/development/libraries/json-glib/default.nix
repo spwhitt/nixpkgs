@@ -11,6 +11,8 @@ stdenv.mkDerivation rec {
 
   configureflags= "--with-introspection";
 
+  NIX_LDFLAGS = "-lintl";
+
   propagatedBuildInputs = [ glib gobjectIntrospection ];
   nativeBuildInputs = [ pkgconfig ];
 
