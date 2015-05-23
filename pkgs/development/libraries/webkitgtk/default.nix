@@ -2,7 +2,7 @@
 , pkgconfig, gettext, gobjectIntrospection
 , gtk2, gtk3, wayland, libwebp, enchant
 , libxml2, libsoup, libsecret, libxslt, harfbuzz, libpthreadstubs
-, enableGeoLocation ? true, geoclue2, sqlite
+, enableGeoLocation ? (!stdenv.isDarwin), geoclue2, sqlite
 , gst-plugins-base
 }:
 
@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
     description = "Web content rendering engine, GTK+ port";
     homepage = "http://webkitgtk.org/";
     license = licenses.bsd2;
-    platforms = platforms.linux;
+    platforms = platforms.unix;
     maintainers = with maintainers; [ iyzsong koral ];
   };
 
@@ -28,7 +28,12 @@ stdenv.mkDerivation rec {
     sha256 = "05igg61lflgwy83cmxgyzmvf2bkhplmp8710ssrlpmbfcz461pmk";
   };
 
-  patches = [ ./finding-harfbuzz-icu.patch ];
+  patches = [
+    ./finding-harfbuzz-icu.patch
+    # On Darwin, CMAKE_SHARED_LINKER_FLAGS is empty, which causes an error in
+    # a cmake script. This patch handles the edge case.
+    ./darwin.patch
+  ];
 
   cmakeFlags = [ "-DPORT=GTK" ];
 
@@ -38,10 +43,12 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    gtk2 wayland libwebp enchant
+    gtk2 libwebp enchant
     libxml2 libsecret libxslt harfbuzz libpthreadstubs
     gst-plugins-base
-  ] ++ optional enableGeoLocation geoclue2;
+  ]
+    ++ optional enableGeoLocation geoclue2
+    ++ optional stdenv.isLinux wayland;
 
   propagatedBuildInputs = [
     libsoup gtk3
